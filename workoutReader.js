@@ -22,13 +22,17 @@ async function ReadWorkoutData(filepath) {
 async function ProcessWorkoutFile(filepath) {
     try {
         const data = await ReadWorkoutData(filepath);
+        //console.log(data);
         let numWorkouts = data.length;
+        //console.log(numWorkouts);
         let totalMinutes = 0;
         for (let i = 0; i < data.length; i++) {
             const workout = data[i];
             totalMinutes += parseFloat(workout.duration);
         }
-        return { numWorkouts, totalMinutes };
+        //console.log(totalMinutes);
+        //console.log([numWorkouts, totalMinutes]);
+        return [numWorkouts, totalMinutes];
     } catch(error) {
         if (error.code == 'ENOENT') {
             console.log('CSV file not found. Check file path');
@@ -39,5 +43,10 @@ async function ProcessWorkoutFile(filepath) {
     }
 }
 
-let filename = './data/workouts.csv'
-console.log(ProcessWorkoutFile(filename));
+//let filename = './data/workouts.csv'
+//console.log(ProcessWorkoutFile(filename));
+
+module.exports = {
+    ReadWorkoutData,
+    ProcessWorkoutFile
+}
